@@ -1,8 +1,20 @@
 NAME = megaphone
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CC = c++
+CPPFLAGS = -Wall -Wextra -Werror
+CPPVERSION = -std=c++98
 
-all :
-	c++ $(CFLAGS) megaphone.cpp -o $(NAME)
+all : $(NAME)
+
+$(NAME): megaphone.o
+	$(CC) $(CPPFLAGS) megaphone.o -o $(NAME)
+
+%.o: %.cpp
+	$(CC) $(CPPFLAGS) -c megaphone.cpp -o megaphone.o
 
 clean :
-	rm megaphone
+	@rm -f megaphone.o
+
+fclean : clean
+	@rm -f $(NAME)
+
+re : fclean all

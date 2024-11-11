@@ -13,10 +13,14 @@ class PhoneBook
 {
     private:
         Contact contacts[8];
-    public:
         size_t size;
-        void search_for_contacts(PhoneBook& list);
-        void setContactAt(Contact newContact, int i);
+
+    public:
+        PhoneBook();
+        static  Contact create_a_new_contact(void);
+        void    search_for_contacts(PhoneBook& list);
+        void    setContact(Contact newContact);
+        void    list_current_contacts(PhoneBook& list);
 };
 
 #endif
