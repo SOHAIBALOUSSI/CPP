@@ -13,16 +13,18 @@ int main(int ac, char **av)
     }
     std::string buff;
     std::string tmp;
-    
+    std::string valid;
     while (std::getline(file1, tmp))
     {
         size_t pos = tmp.find(str2);
-        if (pos)
+        if (pos != std::string::npos)
         {
-            //
+            valid = tmp.substr(0, pos);
+            valid += str2;
+            valid += tmp.substr(pos + str2.size(), tmp.size());
         }
         buff +='\n';
-        buff += tmp;
+        buff += valid;
     }
     std::cout << buff;
     return 0;
