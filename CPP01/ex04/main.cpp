@@ -1,31 +1,45 @@
 #include <iostream>
 #include <fstream>
+#include "replace.hpp"
+
+
 
 int main(int ac, char **av)
 {
-    // std::string fileName = av[0];
-    std::string str1 = "Batman";
-    std::string str2 = "Hello";
-    std::ifstream file1("test.txt");
-    if (!file1) {
-        std::cerr << "Error opening file";
+    if (ac != 4) { std::cout << USAGE_ERR; return 1; }
+
+    std::string infileName = av[1];
+    std::string toFind = av[2];
+    std::string replace = av[3];
+    if (infileName.empty() || toFind.empty() || replace.empty()) {
+        std::cout << EMPTY_ERR;
         return 1;
     }
-    std::string buff;
-    std::string tmp;
-    std::string valid;
-    while (std::getline(file1, tmp))
+    std::string outfileName = infileName + ".replace";
+    std::ifstream infile(infileName.c_str());
+    if (infile.good() == false) { std::cout << INFILE_ERR; return 1;}
+    std::ofstream outfile(outfileName.c_str());
+    std::string line;
+    while (std::getline(infile, line))
     {
-        size_t pos = tmp.find(str2);
-        if (pos != std::string::npos)
+        size_t pos = 0;
+        while ((pos = line.find(toFind))!= std::string::npos)
         {
-            valid = tmp.substr(0, pos);
-            valid += str2;
-            valid += tmp.substr(pos + str2.size(), tmp.size());
+            std::string newLine = "";
+            for (size_t i = 0; i < line.length(); i++) {
+                if (i == pos) {
+                    newLine += replace;
+                    i += toFind.length() - 1;
+                } else {
+                    newLine += line[i];
+                }
+            }
+            line = newLine;
+            pos = line.find(toFind, pos + replace.length());
         }
-        buff +='\n';
-        buff += valid;
+        outfile << line << "\n";
     }
-    std::cout << buff;
+    outfile.close();
+    infile.close();
     return 0;
 }
