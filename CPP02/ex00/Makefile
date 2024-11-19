@@ -1,9 +1,9 @@
-NAME = brain
+NAME = ./a.out
 CC = c++ 
 CPPFLAGS = -Wall -Wextra -Werror
 CPPVERSION = -std=c++98
-SRCS = main.cpp
-OBJS = main.o
+SRCS = main.cpp Fixed.cpp
+OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
 

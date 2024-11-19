@@ -1,12 +1,11 @@
 #include "Zombie.hpp"
 
-
 int main()
 {
-    Zombie *arr = zombieHorde(10, "BAMTAN");
-    for (size_t i = 0; i < 10; i++)
-    {
-        arr[i].announce();
+    size_t numOfZombies = 10;
+    Zombie *Zombies = zombieHorde(numOfZombies, "k3k3");
+    for (size_t i = 0; i < numOfZombies; i++) {
+        Zombies[i].announce();
     }
-    delete[] arr;
+    delete[] Zombies;
 }

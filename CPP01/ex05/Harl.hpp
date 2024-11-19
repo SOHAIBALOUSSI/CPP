@@ -1,5 +1,6 @@
 #ifndef HARL_HPP
 #define HARL_HPP
+
 #include <iostream>
 
 enum e_Level {
@@ -12,17 +13,16 @@ enum e_Level {
 
 class Harl
 {
-private:
-    void debug( void );
-    void info( void );
-    void warning( void );
-    void error( void );
-public:
-    Harl(/* args */){};
-    ~Harl(){};
+    private:
+        void debug( void );
+        void info( void );
+        void warning( void );
+        void error( void );
 
-    void complain( std::string level );
+    public:
+        void complain( std::string level );
 };
 
+typedef void (Harl::*FuncPtr)();
 
 #endif

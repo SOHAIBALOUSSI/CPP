@@ -6,15 +6,14 @@
 
 class HumanA
 {
-private:
-    std::string name;
-    Weapon      &WeaponA;
-
-public:
-    HumanA(std::string humanName, Weapon &WeaponObj);
-    ~HumanA();
-
-    void    attack();
+    private:
+        std::string name;
+        Weapon      &WeaponA;
+    
+    public:
+        HumanA(std::string humanName, Weapon &WeaponObj);
+    
+        void    attack();
 };
 
 #endif

@@ -5,10 +5,6 @@ HumanA::HumanA(std::string humanName, Weapon &WeaponObj)
 {
 }
 
-HumanA::~HumanA()
-{
-}
-
 void    HumanA::attack()
 {
     std::cout << this->name << " attacks with their " << this->WeaponA.getType() << "\n";

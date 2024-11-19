@@ -1,45 +1,49 @@
-#include <iostream>
-#include <fstream>
+
 #include "replace.hpp"
 
-
+bool    Replace::parseInput(char **av)
+{
+    setInFilename(av[1]);
+    setToFind(av[2]);
+    setReplace(av[3]);
+    if (getInFilename().empty() || getToFind().empty()) {
+        std::cout << EMPTY_ERR;
+        return false;
+    }
+    setOutFilename(getInFilename() + ".replace");
+    return true;
+}
 
 int main(int ac, char **av)
 {
     if (ac != 4) { std::cout << USAGE_ERR; return 1; }
+    
+    Replace RepTool;
+    if (RepTool.parseInput(av) == false) { return 1; }
 
-    std::string infileName = av[1];
-    std::string toFind = av[2];
-    std::string replace = av[3];
-    if (infileName.empty() || toFind.empty() || replace.empty()) {
-        std::cout << EMPTY_ERR;
+    std::ifstream Infile(RepTool.getInFilename().c_str());
+    if (Infile.fail() == true) {
+        std::cout << FILE_ERR;
         return 1;
     }
-    std::string outfileName = infileName + ".replace";
-    std::ifstream infile(infileName.c_str());
-    if (infile.good() == false) { std::cout << INFILE_ERR; return 1;}
-    std::ofstream outfile(outfileName.c_str());
+    std::ofstream Outfile(RepTool.getOutFilemame().c_str());
+    if (Outfile.fail() == true) {
+        std::cout << FILE_ERR;
+        return 1;
+    }
+    
     std::string line;
-    while (std::getline(infile, line))
+    while (std::getline(Infile, line))
     {
         size_t pos = 0;
-        while ((pos = line.find(toFind))!= std::string::npos)
+        while ((pos = line.find(RepTool.getToFind(), pos)) != std::string::npos)
         {
-            std::string newLine = "";
-            for (size_t i = 0; i < line.length(); i++) {
-                if (i == pos) {
-                    newLine += replace;
-                    i += toFind.length() - 1;
-                } else {
-                    newLine += line[i];
-                }
-            }
-            line = newLine;
-            pos = line.find(toFind, pos + replace.length());
+            line = line.substr(0, pos) + RepTool.getReplace() + line.substr(pos + RepTool.getToFind().length());
+            pos += RepTool.getReplace().length();
         }
-        outfile << line << "\n";
+        Outfile << line << "\n";
     }
-    outfile.close();
-    infile.close();
+    Infile.close();
+    Outfile.close();
     return 0;
 }

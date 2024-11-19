@@ -2,7 +2,7 @@ NAME = replace
 CC = c++ 
 CPPFLAGS = -Wall -Wextra -Werror
 CPPVERSION = -std=c++98
-SRCS = main.cpp
+SRCS = main.cpp replace.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
