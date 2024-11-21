@@ -14,19 +14,16 @@ class Fixed
         Fixed();
         Fixed(const int Value);
         Fixed(const float fValue);
-
         ~Fixed();
         Fixed(const Fixed &other); // copy constractor
         Fixed& operator = (const Fixed &other); // copy assignment operator
-        
-        float toFloat( void ) const;
-        int toInt( void ) const;
+
         int getRawBits( void ) const;
         void setRawBits( int const raw );
 
 };
 
-std::ostream&    operator<<(std::ostream& out, const Fixed& fp);
+std::ostream&    operator << (std::ostream& out, const Fixed& fp);
 
 
 #endif /* FIXED_HPP */

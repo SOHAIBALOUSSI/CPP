@@ -1,6 +1,7 @@
 #include "Fixed.hpp"
 
 int main( void ) {
+    foo();
     Fixed a;
     Fixed b( a );
     Fixed c;
@@ -10,3 +11,4 @@ int main( void ) {
     std::cout << c.getRawBits() << std::endl;
     return 0;
 }
+
