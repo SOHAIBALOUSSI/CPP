@@ -8,12 +8,12 @@ Fixed::Fixed() : _value(0)
 }
 Fixed::Fixed(const int Value)
 {
-   _value = Value << _fracBits;
+   _value = Value << _fracBits; // v * 2 ^ _fracBits
 }
 
 Fixed::Fixed(const float fValue)
 {
-    _value = (int)roundf(fValue * (1 << _fracBits));
+    _value = (int)roundf(fValue * (1 << _fracBits)); 
 }
 
 Fixed::~Fixed()
@@ -40,17 +40,17 @@ int Fixed::getRawBits( void ) const
 
 void Fixed::setRawBits( int const rawBits )
 {
-    this->_value = rawBits;
+    _value = rawBits;
 }
 
 float Fixed::toFloat( void ) const
 {
-    return ((float)_value / (1 << _fracBits));
+    return ((float)_value / (1 << _fracBits)); // value / 2 ^ 8
 }
 
 int Fixed::toInt( void ) const
 {
-    return _value >> _fracBits;
+    return _value >> _fracBits; // shift it back to its original form
 }
 
 std::ostream&    operator<<(std::ostream& out, const Fixed& fp)
@@ -92,14 +92,16 @@ bool   Fixed::operator != (const Fixed &b)
 
 Fixed     Fixed::operator + (const Fixed &b)
 {
-    return Fixed(this->_value + b._value);
+    Fixed plus;
+    plus._value = this->_value + b._value;
+    return plus;
 }
 
 Fixed     Fixed::operator - (const Fixed &b)
 {
-    Fixed fpoint;
-    fpoint._value = this->_value - b._value;
-    return fpoint;
+    Fixed minus;
+    minus._value = this->_value - b._value;
+    return minus;
 }
 
 Fixed     Fixed::operator * (const Fixed &b)
@@ -112,11 +114,11 @@ Fixed     Fixed::operator * (const Fixed &b)
 Fixed     Fixed::operator / (const Fixed &b)
 {
     Fixed fpoint;
-    fpoint._value = (this->_value >> _fracBits) / b._value;
+    fpoint._value = (this->_value << _fracBits) / b._value;
     return fpoint;
 }
 
-Fixed&     Fixed::operator++ ()
+Fixed&     Fixed::operator++ () // pre-increment 
 {
     this->_value += 1;
     return *this;
@@ -124,7 +126,7 @@ Fixed&     Fixed::operator++ ()
 
 Fixed     Fixed::operator++ (int)
 {
-    Fixed copy(*this);
+    Fixed copy(*this); // save current value
     this->_value += 1;
     return copy;
 }
@@ -142,28 +144,30 @@ Fixed  Fixed::operator-- (int)
     return copy;
 }
 
+Fixed& Fixed::min(Fixed& a, Fixed& b)
+{
+    if (a._value < b._value)
+        return a;
+    return b;
+}
 
+const Fixed& Fixed::min(const Fixed& a, const Fixed& b)
+{
+    if (a._value < b._value)
+        return a;
+    return b;
+}
 
-/*
-Default constructor called
-Int constructor called
-Float constructor called
-Copy constructor called
-Copy assignment operator called
-Float constructor called
-Copy assignment operator called
-Destructor called
-a is 1234.43
-b is 10
-c is 42.4219
-d is 10
-a is 1234 as integer
-b is 10 as integer
-c is 42 as integer
-d is 10 as integer
-Destructor called
-Destructor called
-Destructor called
-Destructor called
-$>
-*/
+Fixed& Fixed::max(Fixed& a, Fixed& b)
+{
+    if (a._value > b._value)
+        return a;
+    return b;
+}
+
+const Fixed& Fixed::max(const Fixed& a, const Fixed& b)
+{
+    if (a._value > b._value)
+        return a;
+    return b;
+}

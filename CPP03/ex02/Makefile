@@ -1,8 +1,8 @@
-NAME = a.out
-CC = c++
+NAME = frag
+CC = c++ 
 CPPFLAGS = -Wall -Wextra -Werror
 CPPVERSION = -std=c++98
-SRCS = main.cpp Fixed.cpp
+SRCS = ScavTrap.cpp ClapTrap.cpp main.cpp FragTrap.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)

@@ -12,11 +12,11 @@ class Fixed
     public:
         Fixed();
         ~Fixed();
-        Fixed(const Fixed &other); // copy constractor
-        Fixed& operator = (const Fixed &other); // copy assignment operator
+        Fixed(const Fixed &other);
+        Fixed& operator = (const Fixed &other);
 
-        int getRawBits( void ) const;
-        void setRawBits( int const raw );
+        int     getRawBits( void ) const;
+        void    setRawBits( int const raw );
 };
 
 
