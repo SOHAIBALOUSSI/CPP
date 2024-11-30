@@ -1,6 +1,6 @@
-NAME = frag
+NAME = diamond
 CC = c++ 
-CPPFLAGS =# -Wall -Wextra -Werror
+CPPFLAGS = -Wall -Wextra -Werror
 CPPVERSION = -std=c++98
 SRCS = ScavTrap.cpp ClapTrap.cpp main.cpp FragTrap.cpp DiamondTrap.cpp
 OBJS = $(SRCS:.cpp=.o)

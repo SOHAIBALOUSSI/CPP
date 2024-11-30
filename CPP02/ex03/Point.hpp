@@ -9,7 +9,6 @@ class Point
     private:
         const Fixed x;        
         const Fixed y;
-
     public:
         Point();
         Point(float x, float y);

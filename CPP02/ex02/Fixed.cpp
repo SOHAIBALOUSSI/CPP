@@ -5,41 +5,48 @@ const int Fixed::_fracBits = 8;
 
 Fixed::Fixed() : _value(0)
 {
+    // std::cout << "Default constructor called\n";
 }
 Fixed::Fixed(const int Value)
 {
+    // std::cout << "Int constructor called\n";
    _value = Value << _fracBits; // v * 2 ^ _fracBits
 }
 
 Fixed::Fixed(const float fValue)
 {
+    // std::cout << "Float constructor called\n";
     _value = (int)roundf(fValue * (1 << _fracBits)); 
 }
 
 Fixed::~Fixed()
 {
+    // std::cout << "Destructor called\n";
 }
 
 Fixed::Fixed(const Fixed &other)
 {
+    // std::cout << "Copy constructor called\n";
     _value = other._value;
 }
 
 Fixed& Fixed::operator = (const Fixed &other)
 {
-    if (this == &other)
-        return *this;
-    this->_value = other._value;
+    // std::cout << "Copy assignment operator called\n";
+    if (this != &other)
+        this->_value = other._value;
     return *this;
 }
 
 int Fixed::getRawBits( void ) const
 {
+    // std::cout << "getRawBits member function called\n";
     return _value;
 }
 
 void Fixed::setRawBits( int const rawBits )
 {
+    // std::cout << "setRawBits member function called\n";
     _value = rawBits;
 }
 
@@ -89,7 +96,6 @@ bool   Fixed::operator != (const Fixed &b)
 }
 
 // Arithmitic operators
-
 Fixed     Fixed::operator + (const Fixed &b)
 {
     Fixed plus;
@@ -126,7 +132,7 @@ Fixed&     Fixed::operator++ () // pre-increment
 
 Fixed     Fixed::operator++ (int)
 {
-    Fixed copy(*this); // save current value
+    Fixed copy(*this);
     this->_value += 1;
     return copy;
 }

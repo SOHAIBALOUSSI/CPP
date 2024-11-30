@@ -14,10 +14,9 @@ class Fixed
         Fixed();
         Fixed(const int Value);
         Fixed(const float fValue);
-
+        Fixed(const Fixed &other);
+        Fixed& operator = (const Fixed &other);
         ~Fixed();
-        Fixed(const Fixed &other); // copy constractor
-        Fixed& operator = (const Fixed &other); // copy assignment operator
         
         float toFloat( void ) const;
         int toInt( void ) const;

@@ -18,3 +18,10 @@ int main( void ) {
     std::cout << "d is " << d.toInt() << " as integer" << std::endl;
     return 0;
 }
+
+// int main()
+// {
+//     Fixed a(3.9f);
+//     std::cout << a.getRawBits() << std::endl;
+//     std::cout << a << std::endl;
+//}

@@ -21,7 +21,4 @@ class DiamondTrap : public FragTrap, public ScavTrap
         void whoAmI();
 };
 
-
-
-
 #endif
