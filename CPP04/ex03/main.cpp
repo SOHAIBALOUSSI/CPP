@@ -7,26 +7,27 @@
 
 int main()
 {
+    IMateriaSource* src = new MateriaSource();
+    src->learnMateria(new Ice());
+    src->learnMateria(new Cure());
+
     ICharacter* me = new Character("me");
-    me->equip(new Ice);
-    me->equip(new Cure);
     ICharacter* target = new Character("bob");
+
+    AMateria *ptr;
+    ptr = src->createMateria("ice");
+    me->equip(ptr);
+    ptr = src->createMateria("cure");
+    me->equip(ptr);
+    
     me->use(0, *target);
     me->use(1, *target);
     me->use(10, *target);
 
     me->unequip(0);
     me->unequip(1);
+    me->unequip(10);
 
-/// test Materia source
-
-    IMateriaSource* src = new MateriaSource();
-    src->learnMateria(new Ice());
-    src->learnMateria(new Cure());
-
-    AMateria *ptr;
-    ptr = src->createMateria("ice");
-    me->equip(ptr);
 
     me->use(2, *target);
 
@@ -34,7 +35,7 @@ int main()
 
     delete target;
     delete me;
-  
+    delete src;
     return 0;
 }
 
