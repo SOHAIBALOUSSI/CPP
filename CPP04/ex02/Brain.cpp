@@ -36,17 +36,17 @@ Brain::~Brain()
 
 void	Brain::setBrainIdeas(std::string idea, size_t count)
 {
-	if (count >= 100)
-		return ;
-	for (int i = 0; i < count; i++) {
+	if (count > 100) { return ; }
+
+	for (size_t i = 0; i < count; i++) {
 		ideas[i] = idea; 
 	}
 }
 
 void    Brain::printIdeas(size_t count)
 {
-    if (count >= 100)
-        return ;
+    if (count > 100) { return ; }
+
 	for (size_t i = 0; i < count; i++) {
 		std::cout << ideas[i] << std::endl;
 	}

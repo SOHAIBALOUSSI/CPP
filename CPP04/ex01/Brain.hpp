@@ -16,8 +16,6 @@ class Brain
 
 		void	setBrainIdeas(std::string idea, size_t count);
 		void	printIdeas(size_t count);
-
-
 };
 
 #endif

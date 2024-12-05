@@ -15,5 +15,4 @@ class Cure : public AMateria
         void use(ICharacter& target);
 };
 
-
 #endif

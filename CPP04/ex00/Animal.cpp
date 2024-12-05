@@ -27,7 +27,7 @@ Animal::~Animal()
 
 void Animal::makeSound() const
 {
-    std::cout << "im just a Base class\n";
+    std::cout << "$%!&$%!^%$!\n";
 }
 
 std::string Animal::getType() const{

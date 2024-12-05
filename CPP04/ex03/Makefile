@@ -2,7 +2,7 @@ NAME = Materia
 CC = c++ 
 CPPFLAGS = -Wall -Wextra -Werror
 CPPVERSION = -std=c++98
-SRCS = main.cpp AMateria.cpp ICharacter.cpp IMateriaSource.cpp MateriaSource.cpp Cure.cpp Ice.cpp
+SRCS = main.cpp AMateria.cpp Character.cpp MateriaSource.cpp Cure.cpp Ice.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)

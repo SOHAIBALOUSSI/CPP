@@ -7,10 +7,9 @@ Dog::Dog() : Animal(), brain(NULL)
     brain = new Brain();
 }
 
-Dog::Dog(const Dog& other)
+Dog::Dog(const Dog& other) : Animal(other)
 {
     std::cout << "Dog's copy constuctor called\n";
-    type = other.type;
     brain = new Brain(*(other.brain));
 }
 

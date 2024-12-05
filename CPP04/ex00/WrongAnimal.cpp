@@ -27,7 +27,7 @@ WrongAnimal::~WrongAnimal()
 
 void WrongAnimal::makeSound()
 {
-    std::cout << "im just a Base class\n";
+    std::cout << "$%!&$%!^%$^@!^%#@!\n";
 }
 
 std::string WrongAnimal::getType(){

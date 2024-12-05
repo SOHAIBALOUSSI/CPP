@@ -7,10 +7,10 @@ Cat::Cat() : Animal(), brain(NULL)
     brain = new Brain();
 }
 
-Cat::Cat(const Cat& other)
+Cat::Cat(const Cat& other) : Animal(other)
 {
     std::cout << "Cat's copy constuctor called\n";
-    type = other.type;
+    std::cout << this->type;
     brain = new Brain(*(other.brain));
 }
 
@@ -19,9 +19,9 @@ Cat& Cat::operator=(const Cat& other)
     std::cout << "Cat's copy assignment operator called\n";
 
     if (this != &other) {
+        Animal::operator=(other);
         if (brain)
             delete brain;
-        type = other.type;
         brain = new Brain(*(other.brain));
     }   
     return *this;
@@ -29,9 +29,9 @@ Cat& Cat::operator=(const Cat& other)
 
 Cat::~Cat()
 {
+    std::cout << "Cat's Destructor called\n";
     if (brain)
         delete brain;
-    std::cout << "Cat's Destructor called\n";
 }
 
 void Cat::makeSound() const

@@ -1,6 +1,6 @@
 NAME = Animals
 CC = c++ 
-CPPFLAGS = #-Wall -Wextra -Werror
+CPPFLAGS = -Wall -Wextra -Werror
 CPPVERSION = -std=c++98
 SRCS = main.cpp Dog.cpp Cat.cpp Animal.cpp WrongAnimal.cpp WrongCat.cpp Brain.cpp
 OBJS = $(SRCS:.cpp=.o)

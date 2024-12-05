@@ -7,10 +7,9 @@ Cat::Cat() : Animal(), brain(NULL)
     brain = new Brain();
 }
 
-Cat::Cat(const Cat& other)
+Cat::Cat(const Cat& other) : Animal(other)
 {
     std::cout << "Cat's copy constuctor called\n";
-    type = other.type;
     brain = new Brain(*(other.brain));
 }
 
