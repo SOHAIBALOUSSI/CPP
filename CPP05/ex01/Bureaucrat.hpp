@@ -16,8 +16,6 @@ class Bureaucrat
         Bureaucrat(std::string name, int grade);
         Bureaucrat(Bureaucrat const &bureaucrat);
         Bureaucrat &operator=(Bureaucrat const &bureaucrat);
-
-
         ~Bureaucrat();
 
         std::string getName();
