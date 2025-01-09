@@ -12,8 +12,8 @@ Bureaucrat::Bureaucrat(std::string name, int grade)  {
     _name = name;
     _grade = grade;
 }
-Bureaucrat::~Bureaucrat() {}
 Bureaucrat::Bureaucrat(Bureaucrat const &Bureaucrat) : _name(Bureaucrat._name), _grade(Bureaucrat._grade) {}
+Bureaucrat::~Bureaucrat() {}
 
 Bureaucrat &Bureaucrat::operator=(Bureaucrat const &assing){
     if (this != &assing) {
@@ -40,15 +40,26 @@ void Bureaucrat::decrementGrade() {
 }
 
 const char * Bureaucrat::GradeTooHighException::what() const throw() {
-    return "Grade Too High";
+    return "Bureaucrat : Grade Too High";
 }
 
 const char * Bureaucrat::GradeTooLowException::what() const throw() {
-    return "Grade Too Low";
+    return "Bureaucrat : Grade Too Low";
 }
 
+void    Bureaucrat::signForm(Form& form) {
+    try {
+        form.beSigned(*this);
+    }
+    catch (const std::exception& e) {
+        std::cerr << _name << " couldn't sign "<< form.getName() << " because " << e.what() << "\n";
+        return ;
+    }
+    std::cout << _name << " signed " << form.getName() << "\n"; 
+}
+
+
 std::ostream& operator<<(std::ostream &out, Bureaucrat& b) {
-    // <name>, bureaucrat grade <grade>
     out << b.getName() << ", bureaucrat grade " << b.getGrade();
     return out;
 }
