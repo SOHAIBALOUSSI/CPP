@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include <string>
-// #include "Bureaucrat.hpp"
-class Bureaucrat;
+#include "Bureaucrat.hpp"
+// class Bureaucrat;
 
 class AForm
 {
@@ -26,6 +26,7 @@ public:
     int getGradeToSign() const;
     int getGradeToExecute() const;
 
+    void beSigned(Bureaucrat& bureaucrat);
 };
 
 std::ostream &operator << (std::ostream &out, AForm& form);

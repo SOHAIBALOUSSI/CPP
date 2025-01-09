@@ -1,6 +1,14 @@
 #include "ShrubberyCreationForm.hpp"
-
+#include "Bureaucrat.hpp"
 int main()
 {
-    ShrubberyCreationForm test("k3k3");
+    try {
+        ShrubberyCreationForm obj("file");
+        Bureaucrat obj2("mahjoub", 20);
+        // obj2.signForm(obj);
+    }
+    catch(const std::exception& e) {
+        std::cerr << e.what() << '\n';
+    }
+    
 }

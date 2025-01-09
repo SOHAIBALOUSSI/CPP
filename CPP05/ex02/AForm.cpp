@@ -29,6 +29,13 @@ AForm& AForm::operator=(const AForm& form) {
     return *this;
 }
 
+void AForm::beSigned(Bureaucrat& bureaucrat) {
+    if (bureaucrat.getGrade() > gradeToSign) {
+        throw AForm::GradeTooLowException();
+    }
+    isSigned = true;
+}
+
 
 // const char * AForm::GradeTooHighException::what() const throw() {
 //     return "Grade too high";
