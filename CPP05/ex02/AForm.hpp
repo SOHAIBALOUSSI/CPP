@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include "Bureaucrat.hpp"
-// class Bureaucrat;
+class Bureaucrat;
 
 class AForm
 {
@@ -26,7 +26,21 @@ public:
     int getGradeToSign() const;
     int getGradeToExecute() const;
 
-    void beSigned(Bureaucrat& bureaucrat);
+    void          beSigned(Bureaucrat& bureaucrat);
+    virtual void  execute(Bureaucrat const & executor) const = 0;
+    
+    class GradeTooHighException : public std::exception
+    {
+        public:
+            const char *what() const throw();
+    };
+
+    class GradeTooLowException : public std::exception
+    {
+        public:
+            const char *what() const throw();
+    };
+
 };
 
 std::ostream &operator << (std::ostream &out, AForm& form);
