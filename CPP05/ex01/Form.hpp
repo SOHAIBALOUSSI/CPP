@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string>
-// #include "Bureaucrat.hpp"
+
 class Bureaucrat;
 
 class Form
@@ -21,7 +21,7 @@ public:
     Form& operator=(const Form& form);
     ~Form();
 
-    std::string getName() const;
+    const std::string getName() const;
     bool getIsSigned() const;
     int getGradeToSign() const;
     int getGradeToExecute() const;

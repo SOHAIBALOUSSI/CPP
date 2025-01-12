@@ -1,4 +1,4 @@
-NAME = Form
+NAME = AForm
 CC = c++ 
 CPPFLAGS = -Wall -Wextra -Werror
 CPPVERSION = -std=c++98

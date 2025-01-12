@@ -1,17 +1,37 @@
 #include "Bureaucrat.hpp"
 
+
+
+
 int main()
 {
-
     try
     {
-       Bureaucrat obj("mahjoub", -1);
-       Bureaucrat obj2("sa3id", 300);
+       Bureaucrat Mahjoub("Mahjoub", 15);
+       std::cout << "Mahjoub's info:\n" << Mahjoub << "\n";
     }
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
     }
-    Bureaucrat obj3("mahjoub", 20);
-    std::cout << obj3 << std::endl;
+
+    try
+    {
+       Bureaucrat saaid("saaid", 151); // too low grade
+       std::cout << "saaid's info:\n" << saaid << "\n";
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
+    try
+    {
+       Bureaucrat ahmed("ahmed", 0); // high grade
+       std::cout << "ahmed's info:\n" << ahmed << "\n";
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
 }

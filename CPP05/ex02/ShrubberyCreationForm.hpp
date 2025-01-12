@@ -5,6 +5,8 @@
 #include "AForm.hpp"
 #include <fstream>
 
+#define  ASCII_TREE  "\n       ### \n      #o### \n    #####o### \n   #o#^#|#/### \n    ###^|/#o# \n     # }|{  # \n       }|{\n"
+
 class ShrubberyCreationForm : public AForm
 {
 private:
@@ -17,6 +19,8 @@ public:
     ShrubberyCreationForm& operator=(const ShrubberyCreationForm& form);
     ~ShrubberyCreationForm();
 
+
+    void  execute(Bureaucrat const & executor) const;
     std::string getTarget() const;
 };
 

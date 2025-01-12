@@ -5,18 +5,25 @@ int main()
 {
     try
     {
-        Bureaucrat hamid("hamid", 11);
-        Form form1("A", 10, 100);
-        Form form2("B", 20, 100);
-
-        hamid.signForm(form1);
-        hamid.signForm(form2);
+        Bureaucrat Mahjoub("Mahjoub", 1);
+        Form form("form", 10, 10);
+        Mahjoub.signForm(form);
+        std::cout << "form info:\n" << form << "\n";
     }
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
     }
-    Form form1("A", 10, 100);
-    std::cout << "\n";
-    std::cout << form1;
+
+    try
+    {
+        Bureaucrat Ahmed("Ahmed", 150);
+        Form form("form", 10, 10);
+        Ahmed.signForm(form);
+        std::cout << "form info:\n" << form << "\n";
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
 }
