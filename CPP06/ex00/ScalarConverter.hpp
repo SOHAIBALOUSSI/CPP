@@ -13,6 +13,10 @@ public:
     ScalarConverter &operator=(const ScalarConverter &other);
     ~ScalarConverter();
 
+    static void convertChar(const std::string& literal);
+    static void convertInt(const std::string& literal);
+    static void convertFloat(const std::string& literal);
+    static void convertDouble(const std::string& literal);
     static void convert(const std::string& literal);
 };
 
