@@ -4,38 +4,34 @@ ScalarConverter::ScalarConverter() {}
 
 ScalarConverter::~ScalarConverter() {}
 
-ScalarConverter::ScalarConverter(const ScalarConverter &other) {}
+ScalarConverter::ScalarConverter(const ScalarConverter &other) {
+    (void)other;
+}
 
 ScalarConverter& ScalarConverter::operator=(const ScalarConverter &other) {
+    (void)other;
     return *this;
 }
 
-
-enum e_type {
-    INT,
-    CHAR,
-    FLOAT,
-    DOUBLE,
-    SPECIAL,
-    UNKOWN
-}; 
-
-bool    isFloat(const std::string& s) {
+bool    ScalarConverter::isFloat(const std::string& s) {
     if (s[s.length() - 1] != 'f') return false;
+    if (s == "nanf" || s == "+inff" || s == "-inff") return true;
     if (s.find(".") == std::string::npos) return false;
+
     int start = 0;
     if (s[0] == '-' || s[0] == '+') start = 1;
     std::string check = s.substr(0, s.size() - 1);
     return check.find_first_not_of("0123456789.", start) == std::string::npos;
 }
 
-bool    isInt(const std::string& s){
+bool    ScalarConverter::isInt(const std::string& s){
     int start = 0;
     if (s[0] == '-' || s[0] == '+') start = 1;
     return s.find_first_not_of("0123456789", start) == std::string::npos;
 }
 
-bool    isDouble(const std::string& s){
+bool    ScalarConverter::isDouble(const std::string& s){
+    if (s == "nan" || s == "+inf" || s == "-inf") return true;
     if (s.find(".") == std::string::npos) return false;
     
     int start = 0;
@@ -45,10 +41,10 @@ bool    isDouble(const std::string& s){
 }
 
 e_type getType(const std::string& s) {
-    if (s.size() == 1 && isalpha(s[0])) return CHAR;
-    if (isInt(s)) return INT;
-    if (isFloat(s)) return FLOAT;
-    if (isDouble(s)) return DOUBLE;
+    if (s.size() == 1 && !isdigit(s[0])) return CHAR;
+    if (ScalarConverter::isInt(s)) return INT;
+    if (ScalarConverter::isFloat(s)) return FLOAT;
+    if (ScalarConverter::isDouble(s)) return DOUBLE;
     return UNKOWN;
 }
 
@@ -61,131 +57,123 @@ void    ScalarConverter::convertChar(const std::string& literal) {
 }
 
 void    ScalarConverter::convertInt(const std::string& literal) {
-    long val = std::strtol(literal.c_str(), 0, 10);
-    if (val > std::numeric_limits<int>::max() || val < std::numeric_limits<int>::min()) {
-        throw std::runtime_error("overflow");
-    }
+    long long val = std::strtoll(literal.c_str(), 0, 10);
+    
+    std::cout << std::fixed << std::setprecision(1);
 
-    if (val > 255 || val < 0 || !isprint(val))
+    if (val > 127 || val < 0)
+        std::cout << "char: impossible" << std::endl;
+    else if (!isprint(val))
         std::cout << "char: Non displayable" << std::endl;
     else
-        std::cout << "char: " << static_cast<char>(val) << std::endl;
+        std::cout << "char: '" << static_cast<char>(val) << "'" << std::endl;
 
-    std::cout << "int: " << static_cast<int>(val) << std::endl;
-    std::cout << "float: " << static_cast<float>(val) << ".0f" <<  std::endl; 
-    std::cout << "double: " << static_cast<double>(val) << ".0" << std::endl;
+    if (val > std::numeric_limits<int>::max() || val < std::numeric_limits<int>::min())
+        std::cout << "int: overflow" << std::endl;
+    else
+        std::cout << "int: " << val << std::endl;
+
+    if (std::strtold(literal.c_str(), 0) > std::numeric_limits<float>::max() || std::strtold(literal.c_str(), 0) < -std::numeric_limits<float>::max()) 
+        std::cout << "float: overflow" << std::endl;
+    else
+        std::cout << "float: " << static_cast<float>(val) << "f" << std::endl;
+
+    if (std::strtold(literal.c_str(), 0) > std::numeric_limits<double>::max()|| std::strtold(literal.c_str(), 0) < -std::numeric_limits<double>::max())
+        std::cout << "double: overflow" << std::endl;
+    else
+        std::cout << "double: " << static_cast<double>(val) << std::endl;
 }
 
 void    ScalarConverter::convertFloat(const std::string& literal) {
-    bool zeroFract = literal.find(".0") != std::string::npos;
-    float val = strtof(literal.c_str(), 0);
+    double val = strtof(literal.c_str(), 0);
 
+    std::cout << std::fixed << std::setprecision(1);
 
-    std::cout << std::fixed << std::setprecision(1) << std::endl;
+    if (literal == "nanf" || literal == "+inff" || literal == "-inff") {
+        std::cout << "char: impossible\n"
+                  << "int: impossible\n"
+                  << "float: " << literal << "\n"
+                  << "double: " << literal.substr(0, literal.length() - 1) << std::endl;
+        return;
+    }
 
-    if (val > 255 || val < 0 || !isprint(val))
+    if (val > 127 || val < 0)
+        std::cout << "char: impossible" << std::endl;
+    else if (!isprint(val))
         std::cout << "char: Non displayable" << std::endl;
     else
-        std::cout << "char: " << static_cast<char>(val) << std::endl;
+        std::cout << "char: '" << static_cast<char>(val) << "'" << std::endl;
     
     if (val > std::numeric_limits<int>::max() || val < std::numeric_limits<int>::min())
         std::cout << "int: overflow" << std::endl;
     else
         std::cout << "int: " << static_cast<int>(val) << std::endl;
 
-    if (val > std::numeric_limits<float>::max()|| val < -std::numeric_limits<int>::max()) 
+    if (std::strtold(literal.c_str(), 0) > std::numeric_limits<float>::max() || std::strtold(literal.c_str(), 0) < -std::numeric_limits<float>::max()) 
         std::cout << "float: overflow" << std::endl;
-    else {
-        std::cout << "float: " << val; 
-        if (val == (int)val) {
-            std::cout << ".0";
-        }
-        std::cout << "f" << std::endl;
-    }
-    if (val > std::numeric_limits<double>::max()|| val < -std::numeric_limits<double>::max())
+    else
+        std::cout << "float: " << static_cast<float>(val) << "f" << std::endl;
+
+    if (std::strtold(literal.c_str(), 0) > std::numeric_limits<double>::max()|| std::strtold(literal.c_str(), 0) < -std::numeric_limits<double>::max())
         std::cout << "double: overflow" << std::endl;
-    else {
-        std::cout << "double: " << static_cast<double>(val);
-        if (val == (int)val) {
-            std::cout << ".0";
-        }
-        std::cout << std::endl;
-    }
+    else
+        std::cout << "double: " << static_cast<double>(val) << std::endl;
 }
 
 void    ScalarConverter::convertDouble(const std::string& literal) {
-    bool zeroFract = literal.find(".0") != std::string::npos;
 
-    double val = strtod(literal.c_str(), 0);
-
-    if (errno == ERANGE) {
-        throw std::runtime_error("overflow");
+    if (literal == "nan" || literal == "+inf" || literal == "-inf") {
+        std::cout << "char: impossible\n"
+                  << "int: impossible\n"
+                  << "float: " << literal + "f" << "\n"
+                  << "double: " << literal << std::endl;
+        return;
     }
+    long double val = strtold(literal.c_str(), 0);
+    std::cout << std::fixed << std::setprecision(1);
 
-    if (val > 255 || val < 0 || !isprint(val))
+
+    if (val > 127 || val < 0)
+        std::cout << "char: impossible" << std::endl;
+    else if (!isprint(val))
         std::cout << "char: Non displayable" << std::endl;
     else
-        std::cout << "char: " << static_cast<char>(val) << std::endl;
-    std::cout << "int: " << static_cast<int>(val) << std::endl;
-    if (zeroFract) {
-        std::cout << "float: " << static_cast<float>(val) << ".0f" <<  std::endl; 
-        std::cout << "double: " << static_cast<double>(val) << ".0" << std::endl;
-    }
-    else {
-        std::cout << "float: " << val << "f" <<  std::endl; 
-        std::cout << "double: " << static_cast<double>(val) << std::endl;
-    }
-}
+        std::cout << "char: '" << static_cast<char>(val) << "'" << std::endl;
+    
+    if (val > std::numeric_limits<int>::max() || val < std::numeric_limits<int>::min())
+        std::cout << "int: overflow" << std::endl;
+    else
+        std::cout << "int: " << static_cast<int>(val) << std::endl;
 
+    if (std::strtold(literal.c_str(), 0) > std::numeric_limits<float>::max() || std::strtold(literal.c_str(), 0) < -std::numeric_limits<float>::max()) 
+        std::cout << "float: overflow" << std::endl;
+    else
+        std::cout << "float: " << static_cast<float>(val) << "f" << std::endl;
+
+    if (std::strtold(literal.c_str(), 0) > std::numeric_limits<double>::max()|| std::strtold(literal.c_str(), 0) < -std::numeric_limits<double>::max())
+        std::cout << "double: overflow" << std::endl;
+    else
+        std::cout << "double: " << static_cast<double>(val) << std::endl;
+}
 
 void    ScalarConverter::convert(const std::string& literal) {
 
-    int dotCount = 0;
     if (literal.empty()) {
         throw std::runtime_error("invalid input");
     }
-    for (int i=0; i< literal.size(); i++) {
-        if (literal[i] == '.') dotCount++;
-        if (dotCount > 1 || !isprint(literal[i])) throw std::runtime_error("invalid input");
+
+    int dotCount = 0;
+    for (size_t i = 0; i < literal.size(); i++) {
+        if (literal[i] == '.') { dotCount++; }
+        if (dotCount > 1 || !isprint(literal[i]))
+            throw std::runtime_error("invalid input");
     }
+
+    Converters ScalarConverters[4] = { &convertInt, &convertChar, &convertFloat, &convertDouble };
 
     e_type type = getType(literal);
-
-    bool zeroFract = literal.find(".0") != std::string::npos;
-
-    switch (type)
-    {
-    case CHAR:
-        convertChar(literal);
-        break;
-    case INT:
-        convertInt(literal);
-        break;
-    case FLOAT:
-        convertFloat(literal);
-        break;
-    case DOUBLE:
-        convertDouble(literal);
-        break;
-    case SPECIAL:
-        // convert(literal);
-        break;
-    default:
-        break;
+    if (type == UNKOWN) {
+        throw std::runtime_error("Unkown type");
     }
-
-    if (type == INT) {
-  
-    }
-    else if (type == CHAR) {
-    }
-    else if (type == FLOAT) {
-
-    }
-    else if (type == DOUBLE) {
-
-    }
-    else {
-        throw std::runtime_error("UNKOWN type");
-    }
+    ScalarConverters[type](literal);
 }
